@@ -1,19 +1,18 @@
 const http = require('http');
+const os = require('os');
 const express = require('express');
 const socketio = require('socket.io');
 
 function getLocalIpAddress() {
-    const os = require('os');
     const networkInterfaces = os.networkInterfaces();
     const wlanInterfaces = networkInterfaces['WLAN'];
     
-    let ip = undefined;
     for (let wlanInterface of wlanInterfaces) {
         if (wlanInterface.family === "IPv4") {
-            ip = wlanInterface.address;
+            return wlanInterface.address;  // looking for local network ip address
         }
     }
-    return ip === undefined? "127.0.0.1": ip;  // using local machines address if no wlan interface was found
+    return "127.0.0.1";  // using local machines address as fallback
 }
 
 const PORT = 8080;   // just the default
@@ -33,7 +32,7 @@ server.listen(PORT, HOST, (err) => {
         console.error("Server address unknown");
     }
     else {
-        const host = address?.address === '0.0.0.0' ? require('os')?.hostname()?.toLowerCase() : address.address;
+        const host = address?.address === '0.0.0.0' ? os.hostname()?.toLowerCase() : address.address;
         const port = address?.port;
         const protocol = address?.family;
         console.log(`Server running on http://${host}:${port}/ using ${protocol}`);
