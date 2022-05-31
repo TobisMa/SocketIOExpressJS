@@ -6,6 +6,7 @@ Template Repository for a javascript based express website with the ability to u
 Install npm following this guide: https://phoenixnap.com/kb/install-node-js-npm-on-windows
 
 Run `npm install` in the project folder on your machine
+Afterwards change the name properties in `package.json` and `package-lock.json` to whatever you like.
 
 Running `npm run dev` starts the server and the server will automatically be restarted when changes are detected.
 
